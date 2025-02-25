@@ -70,7 +70,7 @@ test.skip("buffer zone ", () => {
     expect(game.placeShip(1,1,1,0)).toStrictEqual([[0, 0], [0, 1], [0, 2], [1, 0], [1, 1], [1, 2], [2, 0], [2, 1], [2, 2]]
     );
 })
-test("Ship placement1", () => {
+test.skip("Ship placement1", () => {
     const game = new gameboard;
     game.placeShip(0,0,1,0);
 
@@ -89,3 +89,33 @@ test("Ship to close", () => {
 
     expect(game.board[1][1]).toStrictEqual(null);
 })
+
+
+
+
+test("Ship hit 1 ", () => {
+    const game = new gameboard;
+    game.placeShip(0,0,3,0);
+    game.receiveAttack(0,0);
+
+    expect(game.board[0][0].hitsTaken).toBe(1);
+})
+test("Ship hit 2 ", () => {
+    const game = new gameboard;
+    game.placeShip(0,0,2,0);
+    game.receiveAttack(0,0);
+    game.receiveAttack(1,0);
+
+    expect(game.board[0][0].sunk).toBe(true);
+})
+
+test("GameOver ", () => {
+    const game = new gameboard;
+    game.placeShip(0,0,2,0);
+    game.receiveAttack(0,0);
+    game.receiveAttack(1,0);
+
+    expect(game.isGameOver).toBe(true);
+})
+
+

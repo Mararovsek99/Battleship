@@ -17,9 +17,9 @@
         isSunk(){
             if (this.hitsTaken >= this.length) {
                 this.sunk = true;
-                return this.sunk;
+                return 
             }
-            return this.sunk
+            return
         }
  }
 
@@ -30,6 +30,10 @@
     constructor(){
         this.size = 10;
         this.board = this.createBoard();
+        this.misShot = {};
+        this.numOfShips = 0;
+        this.sunkShips = 0;
+        this.isGameOver = false;
         
 
     }
@@ -39,6 +43,10 @@
     }
 
     placeShip(x, y, length, direction){
+        //create new ship
+        const newShip = new ship(length);
+        //update counter of ships
+        this.numOfShips++;
         //checks if cordinate its inside the map
         if(!(-1 < x && x <= (this.size -1) && -1 < y && y <= (this.size -1)) ){
             return false
@@ -65,7 +73,6 @@
                 shipCordinates.push(newCordinate);
             }            
         }
-        debugger;
         //create shadow space around ship
         let bufferZone = [];
         shipCordinates.forEach(cordinate => {
@@ -91,8 +98,27 @@
         if(!(bufferZone.every(([x, y]) => this.board[x][y] === null ))){
             return ;
         }
-        shipCordinates.forEach(([setx,sety]) => this.board[setx][sety] = 1);
+        shipCordinates.forEach(([setx,sety]) => this.board[setx][sety] = newShip);
         
+    }
+    receiveAttack(x,y){
+        //if its missed
+        if (this.board[x][y] === null) {
+            this.board[x][y] = "Miss";
+        }
+        else if(typeof this.board[x][y] === "object"){
+            //hits ship
+            this.board[x][y].hit();
+            if (this.board[x][y].sunk) {
+                this.sunkShips++;
+                this.gameOver();
+            }
+        }
+    }
+    gameOver(){
+        if (this.numOfShips === this.sunkShips) {
+            this.isGameOver = true;
+        }
     }
     
 }
