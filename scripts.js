@@ -122,5 +122,12 @@
     }
     
 }
+class player{
+    constructor(name){
+        this.name = name;
+        this.gameboard = new gameboard;
+    }
 
- module.exports = {ship, gameboard};
+}
+
+ module.exports = {ship, gameboard, player};
