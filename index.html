@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Battleship</title>
+    <link
+      rel="icon"
+      type="image/png"
+      href="favicon/favicon-96x96.png"
+      sizes="96x96"
+    />
+    <link rel="icon" type="image/svg+xml" href="favicon/favicon.svg" />
+    <link rel="shortcut icon" href="favicon/favicon.ico" />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="favicon/apple-touch-icon.png"
+    />
+    <link rel="manifest" href="favicon/site.webmanifest" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="titleContainer">
+        <div class="blackLine"></div>
+        <div class="title"><h1>BATTLESHIP</h1></div>
+        <div class="blackLine"></div>
+      </div>
+      <div class="infoTitle">
+        <h2>Place your ships!</h2>
+      </div>
+      <div class="battleContainer">
+        <div class="myShips ships">
+          <img class="shipIcone" src="/icons/ship6.png" alt="ship 6" />
+          <div class="life">
+            <div class="lifeBlock"></div>
+            <div class="lifeBlock"></div>
+            <div class="lifeBlock"></div>
+            <div class="lifeBlock"></div>
+            <div class="lifeBlock"></div>
+            <div class="lifeBlock"></div>
+          </div>
+          <img class="shipIcone" src="/icons/ship5.png" alt="ship 5" />
+          <div class="life">
+            <div class="lifeBlock"></div>
+            <div class="lifeBlock"></div>
+            <div class="lifeBlock"></div>
+            <div class="lifeBlock"></div>
+            <div class="lifeBlock"></div>
+          </div>
+          <img class="shipIcone" src="/icons/ship3.png" alt="ship 3" />
+          <div class="life">
+            <div class="lifeBlock"></div>
+            <div class="lifeBlock"></div>
+            <div class="lifeBlock"></div>
+          </div>
+          <img class="shipIcone" src="/icons/ship3,1.png" alt="ship 3" />
+          <div class="life">
+            <div class="lifeBlock"></div>
+            <div class="lifeBlock"></div>
+            <div class="lifeBlock"></div>
+          </div>
+          <img class="shipIcone" src="/icons/ship2.png" alt="ship 3" />
+          <div class="life">
+            <div class="lifeBlock"></div>
+            <div class="lifeBlock"></div>
+          </div>
+        </div>
+        <div class="myBoard board"></div>
+        <div class="middleBoard"></div>
+        <div class="computerBoard board"></div>
+        <div class="computerShips ships">
+          <img class="shipIcone" src="/icons/ship6.png" alt="ship 6" />
+
+          <img class="shipIcone" src="/icons/ship5.png" alt="ship 5" />
+
+          <img class="shipIcone" src="/icons/ship3.png" alt="ship 3" />
+
+          <img class="shipIcone" src="/icons/ship3,1.png" alt="ship 3" />
+
+          <img class="shipIcone" src="/icons/ship2.png" alt="ship 3" />
+        </div>
+      </div>
+      <div class="hitInfo">
+        <button class="gameButton RandomBtn">Random</button>
+        <button class="gameButton directionBtn" data-dir="H">
+          Direction: Horizontal
+        </button>
+
+        <img class="infoIcons O" src="/icons/o.png" alt="miss" />
+        <h3>IN THE WATER</h3>
+        <span></span>
+        <span></span>
+
+        <img class="infoIcons X" src="/icons/x.png" alt="hit" />
+        <h3>HIT</h3>
+      </div>
+    </div>
+
+    <script type="module" src="scripts.js"></script>
+    <script type="module" src="DOMscript.js"></script>
+  </body>
+</html>

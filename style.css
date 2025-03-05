@@ -1,0 +1,229 @@
+* {
+  /* border: solid red 1px; */
+  margin: 0px;
+  padding: 0px;
+}
+
+@font-face {
+  font-family: "Sport";
+  src: url("fonts/Light\ Sport\ DEMO.otf");
+}
+
+:root {
+  --main-color: aliceblue;
+  --mainFont: "Sport";
+  --background-image: url("./img/nightBackground.jpg");
+  --title-size: 80px;
+  --desc-size: 30px;
+  --input-width: 500px;
+  --input-height: 50px;
+  --temp-height: 200px;
+  --h1-size: 150px;
+  --h2-size: 50px;
+  --h3-size: 30px;
+  --board-size: 450px;
+  --life-size: 20px;
+}
+h1 {
+  font-family: var(--mainFont);
+  font-size: var(--h1-size);
+  letter-spacing: 5px;
+  transform: translateY(-10px);
+  height: 130px;
+}
+.titleContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 20px;
+}
+.title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.blackLine {
+  background-color: black;
+  width: 80%;
+  height: 5px;
+}
+.battleContainer {
+  margin-top: 50px;
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+}
+.hitInfo {
+  margin-top: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+.board {
+  height: var(--board-size);
+  width: var(--board-size);
+  border: solid 3px #0a0909;
+  box-shadow: 6px 12px 7px #888;
+}
+.middleBoard {
+  width: 5px;
+  background-color: #0a0909;
+}
+.infoIcons {
+  height: 40px;
+}
+.O {
+  height: 30px;
+}
+.ships {
+  display: flex;
+  flex-direction: column;
+  justify-content: left;
+  gap: 10px;
+}
+.shipIcone {
+  height: 40px;
+  width: 150px;
+}
+.life {
+  display: flex;
+  gap: 5px;
+}
+.lifeBlock {
+  width: var(--life-size);
+  height: var(--life-size);
+  background-color: #d80b0b;
+  border-radius: 4px;
+}
+.cell {
+  border: solid 1px #999999;
+  cursor: pointer;
+}
+.board {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  grid-template-rows: repeat(10, 1fr);
+}
+.startGame {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  width: 600px;
+  padding: 20px;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  z-index: 1000;
+
+  font-family: var(--mainFont);
+  font-size: var(--h2-size);
+  letter-spacing: 2px;
+}
+input {
+  height: 50px;
+  width: 350px;
+  text-align: center;
+  font-size: var(--h3-size);
+  border: none;
+  outline: none;
+}
+@keyframes shake {
+  0% {
+    transform: rotate(5deg);
+  }
+  25% {
+    transform: translateX(-5px);
+  }
+  50% {
+    transform: rotate(-5deg);
+  }
+  75% {
+    transform: translateX(-5px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+.shake {
+  animation: shake 0.3s ease-in-out;
+}
+.submit {
+  background-color: black;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  animation: colorChange 1s infinite alternate;
+  font-family: var(--mainFont);
+  font-size: 30px;
+  transition: ease-in-out 0.1s;
+}
+.submit:hover {
+  scale: 1.2;
+}
+@keyframes colorChange {
+  0% {
+    background-color: rgb(139, 4, 4);
+  }
+  50% {
+    background-color: red;
+  }
+  100% {
+    background-color: rgb(139, 4, 4);
+  }
+}
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.486);
+  z-index: 999;
+  filter: blur(5px);
+  backdrop-filter: blur(2px);
+}
+.infoTitle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 70px;
+  font-size: var(--h2-size);
+}
+@keyframes colorChangeFont {
+  0% {
+    color: rgb(0, 0, 0);
+  }
+  50% {
+    color: rgb(189, 189, 189);
+  }
+  100% {
+    color: rgb(0, 0, 0);
+  }
+}
+.infoTitle h2 {
+  animation: colorChangeFont 2s infinite alternate;
+}
+.gameButton {
+  background-color: black;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-family: var(--mainFont);
+  font-size: 30px;
+}
+.RandomBtn {
+  background-color: rgb(0, 0, 0);
+}
+.directionBtn {
+  margin-right: 100px;
+  background-color: rgb(33, 131, 9);
+}
