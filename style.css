@@ -64,8 +64,10 @@ h1 {
 .board {
   height: var(--board-size);
   width: var(--board-size);
-  border: solid 3px #0a0909;
   box-shadow: 6px 12px 7px #888;
+}
+.boardTurn {
+  border: solid 3px #0a0909;
 }
 .middleBoard {
   width: 5px;
@@ -152,6 +154,26 @@ input {
 .shake {
   animation: shake 0.3s ease-in-out;
 }
+@keyframes chossenMove {
+  0% {
+    transform: translateX(-5px);
+  }
+  25% {
+    transform: translateX(5px);
+  }
+  50% {
+    transform: translateX(-5px);
+  }
+  75% {
+    transform: translateX(5px);
+  }
+  100% {
+    transform: translateX(-5px);
+  }
+}
+.chossenShip {
+  animation: chossenMove 1s ease-in-out infinite;
+}
 .submit {
   background-color: black;
   color: white;
@@ -194,7 +216,7 @@ input {
   align-items: center;
   justify-content: center;
   margin-top: 70px;
-  font-size: var(--h2-size);
+  height: 70px;
 }
 @keyframes colorChangeFont {
   0% {
@@ -206,9 +228,6 @@ input {
   100% {
     color: rgb(0, 0, 0);
   }
-}
-.infoTitle h2 {
-  animation: colorChangeFont 2s infinite alternate;
 }
 .gameButton {
   background-color: black;
@@ -226,4 +245,16 @@ input {
 .directionBtn {
   margin-right: 100px;
   background-color: rgb(33, 131, 9);
+}
+#placeShipTitle,
+#yourTitle,
+#OpponentTitle {
+  animation: colorChangeFont 2s infinite alternate;
+  font-size: var(--h2-size);
+  font-family: var(--mainFont);
+  letter-spacing: 4px;
+}
+#yourTitle,
+#OpponentTitle {
+  display: none;
 }

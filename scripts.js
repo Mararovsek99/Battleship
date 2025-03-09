@@ -38,6 +38,10 @@ class gameboard {
       .map(() => Array(this.size).fill(null));
   }
   placeRandomShips() {
+    //you cant place if player starts manualy.
+    if (this.numOfShips > 0) {
+      return;
+    }
     //array for lenght of ships
     const ships = [6, 5, 3, 3, 2];
 
@@ -56,6 +60,10 @@ class gameboard {
     });
   }
   placeShip(x, y, length, direction) {
+    //if its already 5 ships, then you cant place any more
+    if (this.numOfShips > 4) {
+      return;
+    }
     //create new ship
     const newShip = new ship(length);
     //checks if cordinate its inside the map

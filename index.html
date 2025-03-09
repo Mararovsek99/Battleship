@@ -28,11 +28,18 @@
         <div class="blackLine"></div>
       </div>
       <div class="infoTitle">
-        <h2>Place your ships!</h2>
+        <h2 id="placeShipTitle">Place your ships!</h2>
+        <h2 id="yourTitle">Shoot at opponent board!</h2>
+        <h2 id="OpponentTitle">Opponent turn</h2>
       </div>
       <div class="battleContainer">
         <div class="myShips ships">
-          <img class="shipIcone" src="/icons/ship6.png" alt="ship 6" />
+          <img
+            id="myShip6"
+            class="shipIcone chossenShip"
+            src="/icons/ship6.png"
+            alt="ship 6"
+          />
           <div class="life">
             <div class="lifeBlock"></div>
             <div class="lifeBlock"></div>
@@ -41,7 +48,12 @@
             <div class="lifeBlock"></div>
             <div class="lifeBlock"></div>
           </div>
-          <img class="shipIcone" src="/icons/ship5.png" alt="ship 5" />
+          <img
+            id="myShip5"
+            class="shipIcone"
+            src="/icons/ship5.png"
+            alt="ship 5"
+          />
           <div class="life">
             <div class="lifeBlock"></div>
             <div class="lifeBlock"></div>
@@ -49,25 +61,41 @@
             <div class="lifeBlock"></div>
             <div class="lifeBlock"></div>
           </div>
-          <img class="shipIcone" src="/icons/ship3.png" alt="ship 3" />
+          <img
+            id="myShip4"
+            class="shipIcone"
+            src="/icons/ship4.png"
+            alt="ship 4"
+          />
+          <div class="life">
+            <div class="lifeBlock"></div>
+            <div class="lifeBlock"></div>
+            <div class="lifeBlock"></div>
+            <div class="lifeBlock"></div>
+          </div>
+          <img
+            id="myShip3"
+            class="shipIcone"
+            src="/icons/ship3.png"
+            alt="ship 3"
+          />
           <div class="life">
             <div class="lifeBlock"></div>
             <div class="lifeBlock"></div>
             <div class="lifeBlock"></div>
           </div>
-          <img class="shipIcone" src="/icons/ship3,1.png" alt="ship 3" />
-          <div class="life">
-            <div class="lifeBlock"></div>
-            <div class="lifeBlock"></div>
-            <div class="lifeBlock"></div>
-          </div>
-          <img class="shipIcone" src="/icons/ship2.png" alt="ship 3" />
+          <img
+            id="myShip2"
+            class="shipIcone"
+            src="/icons/ship2.png"
+            alt="ship 2"
+          />
           <div class="life">
             <div class="lifeBlock"></div>
             <div class="lifeBlock"></div>
           </div>
         </div>
-        <div class="myBoard board"></div>
+        <div class="myBoard board boardTurn"></div>
         <div class="middleBoard"></div>
         <div class="computerBoard board"></div>
         <div class="computerShips ships">
@@ -75,11 +103,11 @@
 
           <img class="shipIcone" src="/icons/ship5.png" alt="ship 5" />
 
+          <img class="shipIcone" src="/icons/ship4.png" alt="ship 4" />
+
           <img class="shipIcone" src="/icons/ship3.png" alt="ship 3" />
 
-          <img class="shipIcone" src="/icons/ship3,1.png" alt="ship 3" />
-
-          <img class="shipIcone" src="/icons/ship2.png" alt="ship 3" />
+          <img class="shipIcone" src="/icons/ship2.png" alt="ship 2" />
         </div>
       </div>
       <div class="hitInfo">

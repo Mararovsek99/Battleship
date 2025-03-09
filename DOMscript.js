@@ -20,7 +20,36 @@ export function drawShip(shipcordinates) {
 function startGame() {
   //if player adds all ships, then we can start a game
   if (myPlayer.gameboard.numOfShips === 5) {
+    //hide direction orientBtn
+    const dirBtn = document.querySelector(".directionBtn");
+    dirBtn.style.visibility = "hidden";
+
+    //remove border to my board to show where to place ships
+    const myBoard = document.querySelector(".myBoard");
+    myBoard.classList.remove("boardTurn");
+    //add border to opponent board to shot
+    const CompBoard = document.querySelector(".computerBoard");
+    CompBoard.classList.add("boardTurn");
+
+    //remove event listener on my board and change cursor.
+    const cells = document.querySelectorAll(".myCell");
+    cells.forEach((cell) => {
+      cell.removeEventListener("click", () => {});
+      cell.style.cursor = "not-allowed";
+    });
     console.log("we can start a game");
+
+    //now change the title to SHOT AT OPPONENT!
+    let placeShipsTitle = document.getElementById("placeShipTitle");
+    let yourTurnTitle = document.getElementById("yourTitle");
+    placeShipsTitle.style.display = "none";
+    yourTurnTitle.style.display = "block";
+
+    //remove chosen ship animation
+    const myShips = document.querySelectorAll(".shipIcone");
+    myShips.forEach((ship) => {
+      ship.classList.remove("chossenShip");
+    });
   }
 }
 
@@ -86,13 +115,15 @@ document.addEventListener("DOMContentLoaded", function () {
   const RandomShipsBtn = document.querySelector(".RandomBtn");
 
   RandomShipsBtn.addEventListener("click", () => {
+    //place random ships
     myPlayer.gameboard.placeRandomShips();
+    //hide random button
     RandomShipsBtn.style.visibility = "hidden";
   });
 
   // orient button for placement
   const orientBtn = document.querySelector(".directionBtn");
-  const direction = 0;
+  let direction = 0;
   orientBtn.addEventListener("click", () => {
     // Toggle dataset.dir
     orientBtn.dataset.dir = orientBtn.dataset.dir === "H" ? "V" : "H";
@@ -106,23 +137,29 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   //ships for manual placement
-  const ships = [6, 5, 3, 3, 2];
+  const ships = [6, 5, 4, 3, 2];
   //click event for cells
   const cells = document.querySelectorAll(".myCell");
   cells.forEach((cell) => {
     cell.addEventListener("click", (event) => {
+      //remove random button
+      RandomShipsBtn.style.visibility = "hidden";
+      //place ship
       myPlayer.gameboard.placeShip(
         Number(event.target.dataset.row),
         Number(event.target.dataset.col),
         ships[myPlayer.gameboard.numOfShips],
         direction
       );
-      console.log(
-        event.target.dataset.row,
-        event.target.dataset.col,
-        ships[myPlayer.gameboard.numOfShips],
-        direction
-      );
+      //change animation to next ship
+      //remove last one
+      let lastship = document
+        .getElementById(`myShip${ships[myPlayer.gameboard.numOfShips - 1]}`)
+        .classList.remove("chossenShip");
+      //add to next ship
+      let nextship = document
+        .getElementById(`myShip${ships[myPlayer.gameboard.numOfShips]}`)
+        .classList.add("chossenShip");
     });
   });
 });
