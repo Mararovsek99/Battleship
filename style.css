@@ -67,7 +67,7 @@ h1 {
   box-shadow: 6px 12px 7px #888;
 }
 .boardTurn {
-  border: solid 3px #0a0909;
+  border: solid 3px #dd0a0a;
 }
 .middleBoard {
   width: 5px;
@@ -102,6 +102,9 @@ h1 {
 .cell {
   border: solid 1px #999999;
   cursor: pointer;
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 .board {
   display: grid;

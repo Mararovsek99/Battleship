@@ -1,4 +1,4 @@
-import { drawShip } from "./DOMscript.js";
+import { drawShip, DrawShoot, playerWins } from "./DOMscript.js";
 class ship {
   constructor(length) {
     this.length = length;
@@ -23,10 +23,11 @@ class ship {
 }
 
 class gameboard {
-  constructor() {
+  constructor(name) {
+    this.name = name;
     this.size = 10;
     this.board = this.createBoard();
-    this.misShot = {};
+    this.shots = [];
     this.numOfShips = 0;
     this.sunkShips = 0;
     this.isGameOver = false;
@@ -43,7 +44,7 @@ class gameboard {
       return;
     }
     //array for lenght of ships
-    const ships = [6, 5, 3, 3, 2];
+    const ships = [6, 5, 4, 3, 2];
 
     ships.forEach((ship) => {
       // loop to place every ship
@@ -73,7 +74,6 @@ class gameboard {
     //checks if end point of ship is inside
     if (direction === 1 && y + length > this.size) return false; // Vertical check
     if (direction === 0 && x + length > this.size) return false;
-    console.log("placing a ship");
     //make array of cordinates of ship,with start position
     let shipCordinates = [[x, y]];
 
@@ -123,17 +123,36 @@ class gameboard {
     });
     //update counter of ships
     this.numOfShips++;
-    drawShip(shipCordinates);
+    if (this.name !== "computer") {
+      drawShip(shipCordinates);
+    }
 
     return true;
+  }
+  receiveRandomAttack() {
+    let randomX = Math.floor(Math.random() * 10);
+    let randomY = Math.floor(Math.random() * 10);
+
+    //if there is already shoot fired
+    while (
+      this.shots.some((shot) => shot[0] === randomY && shot[1] === randomX)
+    ) {
+      randomX = Math.floor(Math.random() * 10);
+      randomY = Math.floor(Math.random() * 10);
+    }
+    //add to shots
+    this.shots.push([randomY, randomX]);
+    this.receiveAttack(randomY, randomX);
   }
   receiveAttack(x, y) {
     //if its missed
     if (this.board[x][y] === null) {
       this.board[x][y] = "Miss";
+      DrawShoot(this.name, "miss", x, y);
     } else if (typeof this.board[x][y] === "object") {
       //hits ship
       this.board[x][y].hit();
+      DrawShoot(this.name, "hit", x, y);
       if (this.board[x][y].sunk) {
         this.sunkShips++;
         this.gameOver();
@@ -143,13 +162,14 @@ class gameboard {
   gameOver() {
     if (this.numOfShips === this.sunkShips) {
       this.isGameOver = true;
+      playerWins(this.name);
     }
   }
 }
 class player {
   constructor(name) {
     this.name = name;
-    this.gameboard = new gameboard();
+    this.gameboard = new gameboard(name);
   }
 }
 

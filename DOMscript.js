@@ -2,7 +2,11 @@ import { player } from "./scripts.js";
 
 let myPlayer;
 let CompPlayer;
-
+// 0 = me 1 = comp
+export let currPlayer = 0;
+export function playerWins(name) {
+  console.log("this one died: " + name);
+}
 export function drawShip(shipcordinates) {
   shipcordinates.forEach((cordinate) => {
     let drawX = cordinate[0];
@@ -16,7 +20,35 @@ export function drawShip(shipcordinates) {
     startGame();
   });
 }
-
+//change turn in DOM-border..
+//for display shooting on boards
+export function DrawShoot(playerBoard, action, drawX, drawY) {
+  //it is miss or hit
+  let icone = "";
+  if (action === "miss") {
+    icone = "url('icons/o.png')";
+  } else {
+    icone = "url('icons/x.png')";
+  }
+  //select on which board we must draw miss or hit
+  if (playerBoard === "computer") {
+    const board = document.querySelector(".computerBoard");
+    let colorCell = board.querySelector(
+      '.cell[data-row="' + drawX + '"][data-col="' + drawY + '"]'
+    );
+    colorCell.style.backgroundImage = icone;
+  } else {
+    const board = document.querySelector(".myBoard");
+    let colorCell = board.querySelector(
+      '.cell[data-row="' + drawX + '"][data-col="' + drawY + '"]'
+    );
+    colorCell.style.backgroundImage = icone;
+  }
+}
+function computerShoot() {
+  myPlayer.gameboard.receiveRandomAttack();
+  currPlayer = 0;
+}
 function startGame() {
   //if player adds all ships, then we can start a game
   if (myPlayer.gameboard.numOfShips === 5) {
@@ -37,7 +69,6 @@ function startGame() {
       cell.removeEventListener("click", () => {});
       cell.style.cursor = "not-allowed";
     });
-    console.log("we can start a game");
 
     //now change the title to SHOT AT OPPONENT!
     let placeShipsTitle = document.getElementById("placeShipTitle");
@@ -49,6 +80,24 @@ function startGame() {
     const myShips = document.querySelectorAll(".shipIcone");
     myShips.forEach((ship) => {
       ship.classList.remove("chossenShip");
+    });
+    //add ships to Comp
+    CompPlayer.gameboard.placeRandomShips();
+    //add event listener for shooting opponent
+    const compCell = document.querySelectorAll(".CompCell");
+    compCell.forEach((cell) => {
+      cell.addEventListener("click", () => {
+        if (currPlayer === 0) {
+          CompPlayer.gameboard.receiveAttack(
+            cell.dataset.row,
+            cell.dataset.col
+          );
+          currPlayer = 1;
+          setTimeout(function () {
+            computerShoot();
+          }, 1);
+        }
+      });
     });
   }
 }
