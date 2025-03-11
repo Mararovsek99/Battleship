@@ -5,7 +5,18 @@ let CompPlayer;
 // 0 = me 1 = comp
 export let currPlayer = 0;
 export function playerWins(name) {
-  console.log("this one died: " + name);
+  if (name === "computer") {
+    name = myPlayer.gameboard.name;
+  }
+  document.querySelector("body").innerHTML += `
+       <div class="overlay"></div>
+
+
+    <div class="startGame">
+        <h2>${name + " is Winner!"}</h2>
+        <button onclick="location.reload();" class="submit">Play again</button>
+    </div>
+    `;
 }
 export function drawShip(shipcordinates) {
   shipcordinates.forEach((cordinate) => {
@@ -21,6 +32,29 @@ export function drawShip(shipcordinates) {
   });
 }
 //change turn in DOM-border..
+function changeTurnDOM() {
+  const myBoard = document.querySelector(".myBoard");
+  const CompBoard = document.querySelector(".computerBoard");
+  const myTitle = document.getElementById("yourTitle");
+  const CompTitle = document.getElementById("OpponentTitle");
+
+  if (currPlayer === 0) {
+    //i must shoot to opponent, so put border on oponent
+    myBoard.classList.remove("boardTurn");
+    myTitle.style.display = "block";
+    //add border to opponent
+    CompBoard.classList.add("boardTurn");
+    CompTitle.style.display = "none";
+  } else {
+    //opponent is shooting so put border on my board and change title to comp shooting
+    CompBoard.classList.remove("boardTurn");
+    CompTitle.style.display = "block";
+
+    //add border to opponent board to shot
+    myBoard.classList.add("boardTurn");
+    myTitle.style.display = "none";
+  }
+}
 //for display shooting on boards
 export function DrawShoot(playerBoard, action, drawX, drawY) {
   //it is miss or hit
@@ -48,6 +82,7 @@ export function DrawShoot(playerBoard, action, drawX, drawY) {
 function computerShoot() {
   myPlayer.gameboard.receiveRandomAttack();
   currPlayer = 0;
+  changeTurnDOM();
 }
 function startGame() {
   //if player adds all ships, then we can start a game
@@ -93,9 +128,10 @@ function startGame() {
             cell.dataset.col
           );
           currPlayer = 1;
+          changeTurnDOM();
           setTimeout(function () {
             computerShoot();
-          }, 1);
+          }, 2500);
         }
       });
     });
