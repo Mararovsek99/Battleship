@@ -31,6 +31,7 @@ class gameboard {
     this.numOfShips = 0;
     this.sunkShips = 0;
     this.isGameOver = false;
+    this.ships = [];
   }
   createBoard() {
     //2d array for board
@@ -123,6 +124,9 @@ class gameboard {
     });
     //update counter of ships
     this.numOfShips++;
+    //add ship to array
+    this.ships.push(newShip);
+
     if (this.name !== "computer") {
       drawShip(shipCordinates);
     }
@@ -149,10 +153,12 @@ class gameboard {
     if (this.board[x][y] === null) {
       this.board[x][y] = "Miss";
       DrawShoot(this.name, "miss", x, y);
+      this.shots.push([x, y]);
     } else if (typeof this.board[x][y] === "object") {
       //hits ship
       this.board[x][y].hit();
       DrawShoot(this.name, "hit", x, y);
+      this.shots.push([x, y]);
       if (this.board[x][y].sunk) {
         this.sunkShips++;
         this.gameOver();

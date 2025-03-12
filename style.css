@@ -96,7 +96,7 @@ h1 {
 .lifeBlock {
   width: var(--life-size);
   height: var(--life-size);
-  background-color: #d80b0b;
+  background-color: #d0d0d0;
   border-radius: 4px;
 }
 .cell {

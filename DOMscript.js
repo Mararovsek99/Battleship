@@ -2,11 +2,14 @@ import { player } from "./scripts.js";
 
 let myPlayer;
 let CompPlayer;
+let direction = 0;
 // 0 = me 1 = comp
 export let currPlayer = 0;
 export function playerWins(name) {
   if (name === "computer") {
     name = myPlayer.gameboard.name;
+  } else {
+    name = CompPlayer.gameboard.name;
   }
   document.querySelector("body").innerHTML += `
        <div class="overlay"></div>
@@ -81,8 +84,45 @@ export function DrawShoot(playerBoard, action, drawX, drawY) {
 }
 function computerShoot() {
   myPlayer.gameboard.receiveRandomAttack();
+  //set player back to USER
   currPlayer = 0;
+  //this change layout of page for each player
   changeTurnDOM();
+  myShipsLifeDOM();
+}
+//my ships has life block bellow them, so this will
+//color them white if ship is hit
+function myShipsLifeDOM() {
+  const ships = myPlayer.gameboard.ships;
+  ships.forEach((ship) => {
+    //first change color of sunk ship icone to gray:
+    let sunk = ship.sunk;
+    const shipIcone = document.querySelector(`.shipIconeMy${ship.length}`);
+    if (sunk) {
+      shipIcone.style.opacity = "0.2";
+    }
+    //then handle lives of my ships;
+    let hits = ship.hitsTaken;
+    const shipsLives = document.querySelectorAll(`.lifeBlock${ship.length}`);
+    shipsLives.forEach((lifeBlock, index) => {
+      if (index < ship.hitsTaken) {
+        lifeBlock.style.backgroundColor = "#d80b0b"; // Change to hit color
+      } else {
+        lifeBlock.style.backgroundColor = "d0d0d0"; // Default color
+      }
+    });
+  });
+}
+//For opponentships i just want to change opacity when ship is sunk
+function CompShipsSunkDOM() {
+  const ships = CompPlayer.gameboard.ships;
+  ships.forEach((ship) => {
+    let sunk = ship.sunk;
+    const shipIcone = document.querySelector(`.shipIconeComp${ship.length}`);
+    if (sunk) {
+      shipIcone.style.opacity = "0.2";
+    }
+  });
 }
 function startGame() {
   //if player adds all ships, then we can start a game
@@ -116,6 +156,15 @@ function startGame() {
     myShips.forEach((ship) => {
       ship.classList.remove("chossenShip");
     });
+
+    //remove event listener on cells for displaying preview of placement
+    const cell = document.querySelectorAll(".myCell");
+    cell.forEach((cell) => {
+      cell.removeEventListener("mouseover", addPreviewBorder);
+      cell.removeEventListener("mouseout", removePreviewBorder);
+      cell.style.border = "";
+    });
+
     //add ships to Comp
     CompPlayer.gameboard.placeRandomShips();
     //add event listener for shooting opponent
@@ -123,21 +172,77 @@ function startGame() {
     compCell.forEach((cell) => {
       cell.addEventListener("click", () => {
         if (currPlayer === 0) {
+          //get cordinate and check if its already shoot?
+          if (
+            CompPlayer.gameboard.shots.some(
+              (shot) =>
+                shot[0] == cell.dataset.row && shot[1] == cell.dataset.col
+            )
+          ) {
+            return;
+          }
           CompPlayer.gameboard.receiveAttack(
             cell.dataset.row,
             cell.dataset.col
           );
+          CompShipsSunkDOM();
           currPlayer = 1;
           changeTurnDOM();
           setTimeout(function () {
             computerShoot();
-          }, 2500);
+          }, 2000);
         }
       });
     });
   }
 }
+//ships for preview placement
+const ships = [6, 5, 4, 3, 2];
+//save cordinates for easy deleting..
+let shipCordinates = [];
+function addPreviewBorder(event) {
+  const length = ships[myPlayer.gameboard.numOfShips];
+  let x = parseInt(event.target.dataset.row, 10);
+  let y = parseInt(event.target.dataset.col, 10);
 
+  //make array of cordinates of ship,with start position
+  shipCordinates = [[x, y]];
+
+  //add others
+  for (let i = 1; i < length; i++) {
+    if (direction) {
+      //vertical = 1
+      y = y + 1;
+      if (y < 10) {
+        let newCordinate = [x, y];
+        shipCordinates.push(newCordinate);
+      }
+    } else {
+      //horizontal = 0
+      x = x + 1;
+      if (x < 10) {
+        let newCordinate = [x, y];
+        shipCordinates.push(newCordinate);
+      }
+    }
+  }
+
+  shipCordinates.forEach((cordinate) => {
+    let colorCell = document.querySelector(
+      '.cell[data-row="' + cordinate[0] + '"][data-col="' + cordinate[1] + '"]'
+    );
+    colorCell.style.border = "solid 2px black";
+  });
+}
+function removePreviewBorder(event) {
+  shipCordinates.forEach((cordinate) => {
+    let colorCell = document.querySelector(
+      '.cell[data-row="' + cordinate[0] + '"][data-col="' + cordinate[1] + '"]'
+    );
+    colorCell.style.border = "";
+  });
+  shipCordinates = [];
+}
 document.addEventListener("DOMContentLoaded", function () {
   //making of grid
   const myBoard = document.querySelector(".myBoard");
@@ -208,7 +313,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // orient button for placement
   const orientBtn = document.querySelector(".directionBtn");
-  let direction = 0;
+  direction = 0;
   orientBtn.addEventListener("click", () => {
     // Toggle dataset.dir
     orientBtn.dataset.dir = orientBtn.dataset.dir === "H" ? "V" : "H";
@@ -242,9 +347,17 @@ document.addEventListener("DOMContentLoaded", function () {
         .getElementById(`myShip${ships[myPlayer.gameboard.numOfShips - 1]}`)
         .classList.remove("chossenShip");
       //add to next ship
-      let nextship = document
-        .getElementById(`myShip${ships[myPlayer.gameboard.numOfShips]}`)
-        .classList.add("chossenShip");
+      if (ships[myPlayer.gameboard.numOfShips]) {
+        let nextship = document
+          .getElementById(`myShip${ships[myPlayer.gameboard.numOfShips]}`)
+          .classList.add("chossenShip");
+      }
     });
+
+    //draw preview of placement for ship
+    cell.addEventListener("mouseover", addPreviewBorder);
+
+    //delete preview of placement for ship
+    cell.addEventListener("mouseout", removePreviewBorder);
   });
 });
