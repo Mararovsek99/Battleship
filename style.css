@@ -12,16 +12,14 @@
 :root {
   --main-color: aliceblue;
   --mainFont: "Sport";
-  --background-image: url("./img/nightBackground.jpg");
-  --title-size: 80px;
   --desc-size: 30px;
   --input-width: 500px;
   --input-height: 50px;
-  --temp-height: 200px;
   --h1-size: 150px;
   --h2-size: 50px;
   --h3-size: 30px;
-  --board-size: 450px;
+  --board-size: 400px;
+  --ship-width: 150px;
   --life-size: 20px;
 }
 h1 {
@@ -74,9 +72,6 @@ h1 {
   background-color: #0a0909;
 }
 .infoIcons {
-  height: 40px;
-}
-.O {
   height: 30px;
 }
 .ships {
@@ -86,8 +81,8 @@ h1 {
   gap: 10px;
 }
 .shipIcone {
-  height: 40px;
-  width: 150px;
+  width: var(--ship-width);
+  height: auto;
 }
 .life {
   display: flex;
@@ -261,13 +256,78 @@ input {
 #OpponentTitle {
   display: none;
 }
+@media (max-width: 1350px) {
+  :root {
+    --h1-size: 150px;
+    --h2-size: 50px;
+    --h3-size: 20px;
+    --board-size: 350px;
+    --ship-width: 120px;
+    --life-size: 15px;
+    --buttonFont-size: 25px;
+  }
+  h3 {
+    font-size: var(--h3-size);
+  }
+  .battleContainer {
+    gap: 20px;
+  }
+  .gameButton {
+    font-size: var(--buttonFont-size);
+  }
+  .directionBtn {
+    margin-right: 25px;
+  }
+}
+@media (max-width: 1050px) {
+  :root {
+    --h1-size: 150px;
+    --h2-size: 50px;
+    --h3-size: 15px;
+    --board-size: 290px;
+    --ship-width: 100px;
+    --life-size: 12px;
+    --buttonFont-size: 20px;
+  }
+  h3 {
+    font-size: var(--h3-size);
+  }
+  .battleContainer {
+    gap: 20px;
+  }
+  .gameButton {
+    font-size: var(--buttonFont-size);
+  }
+  .life {
+    gap: 4px;
+  }
+  .lifeBlock {
+    border-radius: 3px;
+  }
+  .computerShips {
+    display: none;
+  }
+  .directionBtn {
+    margin-right: 10px;
+  }
+}
 @media (max-width: 768px) {
+  :root {
+    --h1-size: 150px;
+    --h2-size: 50px;
+    --h3-size: 15px;
+    --board-size: 250px;
+    --ship-width: 120px;
+    --life-size: 15px;
+    --buttonFont-size: 20px;
+  }
   .startGame {
-    width: 300px;
+    width: 80vw;
     top: 30%;
   }
   input {
     width: 300px;
+    font-size: 30px;
   }
   h1 {
     font-size: 80px;
@@ -279,13 +339,14 @@ input {
     margin-top: 10px;
     align-items: center;
     order: 4;
+    gap: 5px;
   }
   .ships {
     flex-direction: row;
     flex-wrap: wrap;
     align-items: baseline;
     justify-content: center;
-    margin-bottom: 50px;
+    margin-bottom: 10px;
   }
   .board {
     width: 350px;
@@ -296,12 +357,26 @@ input {
     margin-right: 0px;
   }
   .hitInfo {
-    flex-direction: row;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-rows: auto auto;
+    grid-template-columns: auto auto;
+    justify-items: center;
+    /* flex-direction: row;
+    flex-wrap: wrap; */
     order: 2;
-    gap: 5px;
+    gap: 8px;
     align-items: center;
     justify-content: center;
+  }
+  .hitInfo h3 {
+    justify-self: start;
+  }
+  .infoIcons {
+    justify-self: end;
+  }
+  .computerShips {
+    display: flex;
+    margin: 20px 0px;
   }
   .container {
     display: flex;
@@ -322,7 +397,10 @@ input {
     order: 1;
   }
   .gameButton {
-    font-size: 25px;
     margin: 0px 5px 10px;
+  }
+  .myShips {
+    display: grid;
+    grid-template-columns: auto auto;
   }
 }
